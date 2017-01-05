@@ -12,6 +12,10 @@
     "brightness": "^3.0.0",
     "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/RyanAfrish7/system-control.git"
+  },
   "devDependencies": {
     "async": "^2.1.4",
     "mocha": "^3.2.0"

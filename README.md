@@ -42,19 +42,19 @@ const system = require('system-control')();
 // `setSystemVolume`, `isMuted`, `mute`. But, they will be executed
 // asynchronously and not serially.
 
-system.display.getSystemVolume().then(function(volume) {
+system.audio.getSystemVolume().then(function(volume) {
   // here comes your code
 });
 
-system.display.setSystemVolume(volume).then(function() {
+system.audio.setSystemVolume(volume).then(function() {
   // here comes your code
 });
 
-system.display.isMuted().then(function(muted) {
+system.audio.isMuted().then(function(muted) {
   // here comes your code
 });
 
-system.display.mute(mute).then(function() {
+system.audio.mute(mute).then(function() {
   // here comes your code
 });
 ```

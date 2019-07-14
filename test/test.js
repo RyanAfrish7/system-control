@@ -11,6 +11,7 @@ describe('audio', function() {
     before(function(done) {
         async.parallel([
             function(callback) {
+                console.log(system.audio.volume(23));
                 system.audio.volume().then(function(vol) {
                     settings.vol = vol; callback();
                 }).catch(callback);

@@ -1,99 +1,32 @@
-'use strict';
+function getImpl(platform) {
+  switch (platform) {
+    case 'linux':
+    case 'darwin':
+      return require('./src/unix/lib');
+    case 'win32':
+      return require('./src/win/lib');
+    default:
+      throw new Error("Unsupported platform: " + platform)
+  }
+};
 
-var util = require('util');
-
-const platform = process.platform;
-let getVolume;
-let setVolume;
-let getMuted;
-let setMuted;
-let increase;
-let decrease;
-
-let brightness;
-let getBrightness;
-let setBrightness;
-
-if (platform === 'win32') {
-  const {speaker} = require('win-audio');
-  brightness = require('win-brightness');
-  getBrightness = util.promisify(brightness.get);
-  setBrightness = util.promisify(brightness.set);
-
-  getVolume = () => speaker.get();
-  setVolume = value => speaker.set(value);
-  getMuted = () => speaker.isMuted();
-  setMuted = async value => {
-    if (!value) speaker.unmute();
-    else speaker.mute();
-  };
-  increase = speaker.increase;
-  decrease = speaker.decrease;
-} else {
-  const loudness = require('loudness');
-  brightness = require('brightness');
-  getBrightness = brightness.get;
-  setBrightness = brightness.set;
-
-  getVolume = util.promisify(loudness.getVolume);
-  setVolume = util.promisify(loudness.setVolume);
-  getMuted = util.promisify(loudness.getMuted);
-  setMuted = util.promisify(loudness.setMuted);
-  /**
-   * increase volume
-   * @param {number} value
-   */
-  increase = async amount => {
-    let volume = await getVolume();
-    volume += amount;
-    if (volume > 100) volume = 100;
-    return setVolume(volume);
-  };
-  /**
-   * decrease volume
-   * @param {number} value
-   */
-  decrease = async amount => {
-    let volume = await getVolume();
-    volume -= amount;
-    if (volume < 0) volume = 0;
-    return setVolume(volume);
+function addAliasMethods(impl) {
+  return {
+    audio: {
+      ...impl.audio,
+      volume: value =>
+        value !== undefined ? impl.audio.setVolume(value) : impl.audio.getVolume(),
+      muted: value =>
+        value !== undefined ? impl.audio.setMuted(value) : impl.audio.isMuted(),
+    },
+    display: {
+      ...impl.display,
+      brightness: value =>
+        value !== undefined ? impl.display.setBrightness(value) : impl.display.getBrightness()
+    },
   };
 }
-const audio = {
 
-  /**
-   * get/set volume
-   * @param {number} value set volume/get volume when undefined
-   */
-  volume: async value => {
-    if (value !== undefined) return setVolume(value);
-    else return getVolume()
-  },
-
-  /**
-   * get/set muted
-   * @param {boolean} muted set muted/get muted when undefined
-   */
-  muted: async muted => {
-    if (muted !== undefined) return setMuted(muted);
-    else return getMuted()
-  }
-
-};
-
-const display = {
-  /**
-   * get/set brightness
-   * @param {boolean} value sets brightness/gets brightness when undefined
-   */
-  brightness: value => {
-    if (value !== undefined) return setBrightness(value);
-    return getBrightness()
-  }
-
-};
-
-var index = { audio, display };
-
-module.exports = index;
+module.exports = addAliasMethods(
+  getImpl(process.platform)
+);

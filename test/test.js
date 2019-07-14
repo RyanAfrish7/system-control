@@ -5,27 +5,14 @@ const system = require('../index.js');
 describe('audio', function() {
     const settings = {};
 
-    before(function(done) {
-        async.parallel([
-            function(callback) {
-                console.log(system.audio.volume(23));
-                system.audio.volume().then(function(vol) {
-                    settings.vol = vol; callback();
-                }).catch(callback);
-            },
-            function(callback) {
-                system.audio.muted().then(function(muted) {
-                    settings.muted = muted; callback();
-                }).catch(callback);
-            }
-        ], done);
+    before(async () => {
+        settings.muted = await system.audio.muted();
+        settings.vol = await system.audio.volume();
     });
 
-    after(function(done) {
-        Promise.all([
-            system.audio.volume(settings.vol),
-            system.audio.muted(settings.muted)
-        ]).then(function() {done()}, done);
+    after(async () => {
+        await system.audio.volume(settings.vol);
+        await system.audio.muted(settings.muted);
     });
 
     describe('#setSystemVolume()', function() {
@@ -65,6 +52,7 @@ describe('audio', function() {
 
 describe('display', function() {
     const settings = {};
+    const epsillon = 0.01;
 
     before(function(done) {
         Promise.all([
@@ -84,7 +72,7 @@ describe('display', function() {
         it('should set brightness', function(done) {
             system.display.brightness(0.8).then(function() {
                 system.display.brightness().then(function(brightness) {
-                    assert.equal(brightness, 0.8, "brightness set successfully"); done();
+                    assert(Math.abs(brightness - 0.8) < epsillon, "brightness set successfully"); done();
                 }).catch(done);
             }).catch(done);
         });

@@ -1,60 +1,61 @@
 # system-control
 Node.js module to configure basic system parameters (brightness and system-control).
-The module uses JS Promise for supporting async calls.
 
-Usage
------
+## Usage
+```js
+const { audio } = require('system-control');
 
-```javascript
-const system = require('system-control')();
+audio.volume().then(volume => console.log(volume)) // get system volume
+audio.volume(80)
+  .then(() => console.log('volume changed')) // set system volume
+  .catch((err) => console.error(err));
+```
+```js
+import { audio } from 'system-control';
+
+(async () => {
+  const volume = await audio.volume() // get system volume
+  try {
+    await audio.volume(80) // set system volume
+    console.log(`volume changed from ${volume} to 80`)
+  } catch (e) {
+    console.error(e);
+  }
+})()
 ```
 
-Brightness
-----------
-
-Brightness can be read and modified easily by accessing the `display` object of the `system`.
-
-```javascript
-const system = require('system-control')();
-
-// NOTE: The following example illustrates usage of both `getBrightness` and
-// `setBrightness`. But, they will be executed asynchronously and not serially.
-
-system.display.getBrightness().then(function(brightness) {
-  // here comes your code
-});
-
-system.display.setBrightness(brightness).then(function() {
-  // here comes your code
-});
+## API
+### systemControl.audio([options])
+#### volume
+`value`: number | undefined<br>
+```js
+await audio.volume(10) // set volume
+await audio.volume() // get volume
 ```
 
-Audio
------
+#### muted
+`value`: boolean | undefined<br>
+```js
+await audio.muted(true) // set muted
+await audio.muted() // get muted
+```
 
+#### increase
+`value`: number | undefined<br>
+```js
+await audio.increase(10) // increase volume
+```
 
-System volume can be read and modified with the help of the `audio` object of the `system`.
+#### decrease
+`value`: number | undefined<br>
+```js
+await audio.decrease(10) // decrease volume
+```
 
-```javascript
-const system = require('system-control')();
-
-// NOTE: The following example illustrates usage of both `getSystemVolume`,
-// `setSystemVolume`, `isMuted`, `mute`. But, they will be executed
-// asynchronously and not serially.
-
-system.audio.getSystemVolume().then(function(volume) {
-  // here comes your code
-});
-
-system.audio.setSystemVolume(volume).then(function() {
-  // here comes your code
-});
-
-system.audio.isMuted().then(function(muted) {
-  // here comes your code
-});
-
-system.audio.mute(mute).then(function() {
-  // here comes your code
-});
+### systemControl.display([options])
+#### brightness
+`value`: number | undefined<br>
+```js
+await display.brightness(10) // set brightness
+await display.brightness() // get brightness
 ```

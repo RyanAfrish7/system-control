@@ -1,8 +1,9 @@
 {
   "name": "system-control",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Exposes configurations of the system",
   "main": "index.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -10,14 +11,17 @@
   "license": "MIT",
   "dependencies": {
     "brightness": "^3.0.0",
-    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
+    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git",
+    "win-audio": "^1.2.0",
+    "win-brightness": "^1.0.0"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/RyanAfrish7/system-control.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RyanAfrish7/system-control.git"
   },
   "devDependencies": {
     "async": "^2.1.4",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "rollup": "^0.61.2"
   }
 }

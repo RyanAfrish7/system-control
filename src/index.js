@@ -1,6 +1,4 @@
-'use strict';
-
-var util = require('util');
+import {promisify} from 'util';
 
 const platform = process.platform;
 let getVolume;
@@ -17,16 +15,16 @@ let setBrightness;
 if (platform === 'win32') {
   const {speaker} = require('win-audio');
   brightness = require('win-brightness');
-  getBrightness = util.promisify(brightness.get);
-  setBrightness = util.promisify(brightness.set);
+  getBrightness = promisify(brightness.get)
+  setBrightness = promisify(brightness.set)
 
   getVolume = () => speaker.get();
   setVolume = value => speaker.set(value);
-  getMuted = () => speaker.isMuted();
+  getMuted = () => speaker.isMuted()
   setMuted = async value => {
     if (!value) speaker.unmute();
     else speaker.mute();
-  };
+  }
   increase = speaker.increase;
   decrease = speaker.decrease;
 } else {
@@ -35,10 +33,10 @@ if (platform === 'win32') {
   getBrightness = brightness.get;
   setBrightness = brightness.set;
 
-  getVolume = util.promisify(loudness.getVolume);
-  setVolume = util.promisify(loudness.setVolume);
-  getMuted = util.promisify(loudness.getMuted);
-  setMuted = util.promisify(loudness.setMuted);
+  getVolume = promisify(loudness.getVolume)
+  setVolume = promisify(loudness.setVolume)
+  getMuted = promisify(loudness.getMuted)
+  setMuted = promisify(loudness.setMuted)
   /**
    * increase volume
    * @param {number} value
@@ -48,7 +46,7 @@ if (platform === 'win32') {
     volume += amount;
     if (volume > 100) volume = 100;
     return setVolume(volume);
-  };
+  }
   /**
    * decrease volume
    * @param {number} value
@@ -58,7 +56,7 @@ if (platform === 'win32') {
     volume -= amount;
     if (volume < 0) volume = 0;
     return setVolume(volume);
-  };
+  }
 }
 const audio = {
 
@@ -80,7 +78,7 @@ const audio = {
     else return getMuted()
   }
 
-};
+}
 
 const display = {
   /**
@@ -92,8 +90,6 @@ const display = {
     return getBrightness()
   }
 
-};
+}
 
-var index = { audio, display };
-
-module.exports = index;
+export default { audio, display }

@@ -11,9 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "brightness": "^3.0.0",
-    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git",
-    "win-audio": "^1.2.0",
-    "win-brightness": "^1.0.0"
+    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
   },
   "repository": {
     "type": "git",
@@ -23,5 +21,9 @@
     "async": "^2.1.4",
     "mocha": "^3.2.0",
     "rollup": "^0.61.2"
+  },
+  "optionalDependencies": {
+    "win-audio": "^1.2.0",
+    "win-brightness": "^1.0.0"
   }
 }

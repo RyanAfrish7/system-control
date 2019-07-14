@@ -9,10 +9,6 @@
   },
   "author": "Afrish Khan S <ryanafrish7@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "brightness": "^3.0.0",
-    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/RyanAfrish7/system-control.git"
@@ -21,8 +17,11 @@
     "async": "^2.1.4",
     "mocha": "^3.2.0"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "win-audio": "^1.2.0",
-    "win-brightness": "^1.0.0"
+    "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
+  },
+  "dependencies": {
+    "brightness": "^3.0.0"
   }
 }

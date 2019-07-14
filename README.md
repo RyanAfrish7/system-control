@@ -1,5 +1,17 @@
 # system-control
-Node.js module to configure basic system parameters (brightness and system-control).
+Node.js module to configure basic system parameters (brightness and audio).
+
+## Installation
+```bash
+npm install system-control
+
+# Based on the os, install corresponding peer dependencies
+
+# For Windows users,
+npm install win-audio
+# For Unix users,
+npm install loudness
+```
 
 ## Usage
 ```js
@@ -25,7 +37,7 @@ import { audio } from 'system-control';
 ```
 
 ## API
-### systemControl.audio([options])
+### systemControl.audio
 #### volume
 `value`: number | undefined<br>
 ```js
@@ -40,19 +52,7 @@ await audio.muted(true) // set muted
 await audio.muted() // get muted
 ```
 
-#### increase
-`value`: number | undefined<br>
-```js
-await audio.increase(10) // increase volume
-```
-
-#### decrease
-`value`: number | undefined<br>
-```js
-await audio.decrease(10) // decrease volume
-```
-
-### systemControl.display([options])
+### systemControl.display
 #### brightness
 `value`: number | undefined<br>
 ```js

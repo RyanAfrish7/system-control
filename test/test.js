@@ -1,12 +1,9 @@
-"use strict";
-
 const assert = require('assert');
 const async = require('async');
 const system = require('../index.js');
 
 describe('audio', function() {
-
-    var settings = {};
+    const settings = {};
 
     before(function(done) {
         async.parallel([
@@ -67,8 +64,7 @@ describe('audio', function() {
 });
 
 describe('display', function() {
-
-    var settings = {};
+    const settings = {};
 
     before(function(done) {
         Promise.all([
@@ -93,5 +89,4 @@ describe('display', function() {
             }).catch(done);
         });
     });
-
 });

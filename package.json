@@ -14,7 +14,7 @@
     "url": "https://github.com/RyanAfrish7/system-control.git"
   },
   "devDependencies": {
-    "async": "^2.1.4",
+    "async": "^3.2.2",
     "mocha": "^3.2.0"
   },
   "peerDependencies": {

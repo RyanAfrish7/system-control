@@ -18,7 +18,7 @@
     "mocha": "^3.2.0"
   },
   "peerDependencies": {
-    "win-audio": "^1.2.0",
+    "win-audio": "^2.0.2",
     "loudness": "git+https://github.com/RyanAfrish7/node-loudness.git"
   },
   "dependencies": {
